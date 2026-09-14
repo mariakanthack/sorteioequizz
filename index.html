@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio e Quiz de Biologia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Overlay do Quiz -->
+    <div class="musketeer-overlay" id="musketeerOverlay">
+        <div class="musketeer-container">
+            <div class="quiz-box">
+                <div class="musketeer-text">🌱 DESAFIO DE BIOLOGIA!</div>
+                <p class="quiz-question" id="quizQuestion">Pergunta aqui...</p>
+                <div class="quiz-options" id="quizOptions"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Efeito de Confetes -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <header>
+        <div class="header-badge">1 - 10</div>
+        <h1>Sorteio & Biologia</h1>
+        <div class="subtitle">Acerte o sorteio e responda a pergunta para somar pontos!</div>
+    </header>
+
+    <main>
+        <section class="scoreboard">
+            <div class="score-card">
+                <span class="score-label">Pontuação Total</span>
+                <span class="score-value" id="points">0</span>
+            </div>
+            <div class="divider"></div>
+            <div class="score-card">
+                <span class="score-label">Sequência Atual</span>
+                <span class="score-value streak-highlight" id="streak">0 / 5</span>
+            </div>
+        </section>
+
+        <div class="game-layout">
+            <section class="main-card">
+                <div class="card-header-text">Número Sorteado</div>
+                
+                <div class="number-display-wrapper">
+                    <div class="number-circle" id="drawnNumber">?</div>
+                </div>
+
+                <div class="progress-bar-container">
+                    <div class="progress-title">Progresso da Sequência</div>
+                    <div class="dots-row">
+                        <div class="dot" id="dot1"><span>1</span></div>
+                        <div class="dot" id="dot2"><span>2</span></div>
+                        <div class="dot" id="dot3"><span>3</span></div>
+                        <div class="dot" id="dot4"><span>4</span></div>
+                        <div class="dot" id="dot5"><span>5</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ilustração Visual do ATP e do Genoma/DNA na mesma página -->
+            <section class="bio-art-card">
+        
+                <svg class="bio-svg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Fundo Suave -->
+                    <rect width="320" height="200" rx="12" fill="#f4faf7" />
+
+                    <!-- MOLÉCULA DE ATP (Esquerda) -->
+                    <g transform="translate(10, 20)">
+                        <!-- Adenina (Hexágono Duplo) -->
+                        <polygon points="25,35 40,25 55,35 55,55 40,65 25,55" fill="#a8d5e2" stroke="#8ab0ab" stroke-width="2"/>
+                        <polygon points="55,35 70,25 80,40 70,55 55,55" fill="#a8d5e2" stroke="#8ab0ab" stroke-width="2"/>
+                        <text x="50" y="47" font-size="9" fill="#2d4039" font-weight="bold" text-anchor="middle">Adenina</text>
+
+                        <!-- Conector -->
+                        <line x1="70" y1="55" x2="80" y2="70" stroke="#8ab0ab" stroke-width="2"/>
+
+                        <!-- Ribose (Pentágono Central) -->
+                        <polygon points="80,70 100,60 115,75 105,95 85,90" fill="#cbe3db" stroke="#8ab0ab" stroke-width="2"/>
+                        <text x="97" y="80" font-size="9" fill="#2d4039" font-weight="bold" text-anchor="middle">Ribose</text>
+
+                        <!-- Conector -->
+                        <line x1="115" y1="75" x2="130" y2="75" stroke="#8ab0ab" stroke-width="2"/>
+
+                        <!-- Três Fosfatos (~P ~P ~P) -->
+                        <circle cx="140" cy="75" r="10" fill="#b8d8cb" stroke="#8ab0ab" stroke-width="2"/>
+                        <text x="140" y="78" font-size="10" fill="#2d4039" font-weight="bold" text-anchor="middle">P</text>
+                        <path d="M 150 73 Q 153 70 156 75" fill="none" stroke="#e07a5f" stroke-width="2"/>
+
+                        <circle cx="166" cy="75" r="10" fill="#b8d8cb" stroke="#8ab0ab" stroke-width="2"/>
+                        <text x="166" y="78" font-size="10" fill="#2d4039" font-weight="bold" text-anchor="middle">P</text>
+                        <path d="M 176 73 Q 179 70 182 75" fill="none" stroke="#e07a5f" stroke-width="2"/>
+
+                        <circle cx="192" cy="75" r="10" fill="#a8d5e2" stroke="#8ab0ab" stroke-width="2"/>
+                        <text x="192" y="78" font-size="10" fill="#2d4039" font-weight="bold" text-anchor="middle">P</text>
+
+                        <text x="110" y="125" font-size="11" fill="#3d5a52" font-weight="bold" text-anchor="middle">ATP (Energia)</text>
+                    </g>
+
+                    <!-- HÉLICE DUPLA DE DNA / GENOMA (Direita) -->
+                    <g transform="translate(230, 15)">
+                        <!-- Pares de Bases (Traços Horizontais) -->
+                        <line x1="25" y1="30" x2="55" y2="30" stroke="#a8d5e2" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="22" y1="50" x2="58" y2="50" stroke="#8ab0ab" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="20" y1="70" x2="60" y2="70" stroke="#cbe3db" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="22" y1="90" x2="58" y2="90" stroke="#a8d5e2" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="25" y1="110" x2="55" y2="110" stroke="#8ab0ab" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="22" y1="130" x2="58" y2="130" stroke="#cbe3db" stroke-width="3" stroke-linecap="round"/>
+
+                        <!-- Fita 1 -->
+                        <path d="M 20 20 Q 40 40 20 60 Q 0 80 20 100 Q 40 120 20 140" fill="none" stroke="#3d5a52" stroke-width="3.5" stroke-linecap="round"/>
+
+                        <!-- Fita 2 -->
+                        <path d="M 60 20 Q 40 40 60 60 Q 80 80 60 100 Q 40 120 60 140" fill="none" stroke="#8ab0ab" stroke-width="3.5" stroke-linecap="round"/>
+
+                        <text x="40" y="165" font-size="11" fill="#3d5a52" font-weight="bold" text-anchor="middle">Genoma (DNA)</text>
+                    </g>
+                </svg>
+            </section>
+        </div>
+
+        <section class="controls-section">
+            <div class="input-label">Escolha um número:</div>
+            <div class="number-buttons" id="numberButtons">
+                <button class="num-btn" data-val="1">1</button>
+                <button class="num-btn" data-val="2">2</button>
+                <button class="num-btn" data-val="3">3</button>
+                <button class="num-btn" data-val="4">4</button>
+                <button class="num-btn" data-val="5">5</button>
+                <button class="num-btn" data-val="6">6</button>
+                <button class="num-btn" data-val="7">7</button>
+                <button class="num-btn" data-val="8">8</button>
+                <button class="num-btn" data-val="9">9</button>
+                <button class="num-btn" data-val="10">10</button>
+            </div>
+        </section>
+
+        <div class="message-banner" id="messageBox">
+            Clique em um número para sortear e iniciar a jogada!
+        </div>
+    </main>
+
+    <footer>
+        <p>Projeto Educacional de Biologia & Interatividade</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
